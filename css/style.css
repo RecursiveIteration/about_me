@@ -1,0 +1,17 @@
+* {
+  color: #222288;
+  background-color: #ff9999;
+}
+
+h1 {
+  color: black;
+}
+
+header h3 {
+  font-family: cursive;
+}
+
+abbr {
+  text-decoration: none;
+  color: #111177;
+}
