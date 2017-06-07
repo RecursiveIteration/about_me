@@ -17,7 +17,7 @@ var questions = [
   'Was my first pet a dog?',
   'Do I prefer pie over cake?',
   'Is running my prefered type of excercise?',
-  'Is momento one of my favorite movies?'
+  'Is Memento one of my favorite movies?'
 ];
 
 console.log('Current questions:');
@@ -26,7 +26,7 @@ for (i = 0; i < questions.length; i++) {
 }
 
 // List containing the correct answers 'yes' = true and 'no' = false.
-var answers = [true, false, false, true, true];
+var answers = ['yes', 'no', 'no', 'yes', 'yes'];
 
 console.log('Answers:\n  ' + answers);
 
@@ -34,14 +34,14 @@ console.log('Answers:\n  ' + answers);
 var responses = [
   [ 'That\'s incorrect. I was born in Honolulu.',
     'Not so! My first pet was a cat.',
-    'Pie is great in all, but I actually prefer cake.',
+    'Pie is great and all, but I actually prefer cake.',
     'Sorry, that\'s not correct. I definitely prefer a nice run when I\'m looking for a workout.',
-    'Nope! Momemto is an incredible movie and definitely towards the top of my list!' ],
+    'Nope! Mememto is an incredible movie and definitely towards the top of my list!' ],
   [ 'That\'s right! I was born on Oahu.',
     'You are correct! My first pet was a siamese cat.',
-    'Most definitely! My favorite is rum cake!',
+    'Most definitely not! My favorite type of cake is rum cake!',
     'That\'s right! There\'s nothing like a nice long run on a clear day!',
-    'Yep! Momento is up near the top of my list.' ]
+    'Yep! Memento is up near the top of my list.' ]
 ];
 
 console.log('Responses to wrong answers:');
@@ -56,6 +56,8 @@ for (i = 0; i < responses[1].length; i++) {
 
 var guesses = [];
 var currentGuess;
+var isCorrect;
+var confirmationMsg;
 
 for (i = 0; i < questions.length; i++) {
   while(!guesses[i]) {
@@ -67,24 +69,46 @@ for (i = 0; i < questions.length; i++) {
       currentGuess = currentGuess.toLowerCase();
     }
     if (currentGuess === 'yes' || currentGuess === 'y') {
-      guesses.push('y');
+      guesses.push('yes');
     } else if (currentGuess === 'no' || currentGuess === 'n') {
-      guesses.push('n');
+      guesses.push('no');
     } else {
       alert('Please respond with a \'yes\' or a \'no\'.');
     }
   }
-}
-console.log('Player responses:\n  ' + guesses);
 
-for (i = 0; i < guesses.length; i++) {
-  if (guesses[i] === 'y') {
-    guesses[i] = true;
-  } else {
-    guesses[i] = false;
-  }
+  if (guesses[i] === answers[i]) {
+    userScore++;
+    isCorrect = 1;
+  } else isCorrect = 0;
+
+  confirmationMsg = responses[isCorrect][i] + '\n\nYour current score is: ' + userScore + '.';
+  alert(confirmationMsg);
 }
-console.log('Responses as booleans:\n ' + guesses);
+
+if (userScore === questions.length) {
+  alert('Great job! You got all he questions right. You must know me pretty well.');
+} else if ((userScore / questions.length) > 0.5) {
+  alert('Not bad, you got ' + userScore + ' out of ' + questions.length + ' answers correct. You know me pretty well!');
+} else if (userScore > 0) {
+  alert('You only got ' + userScore + 'answers right. Take some time to surf my web page and you\'ll discover more about me!');
+} else {
+  alert('You didn\'t get any answers correct. No worries, we\'ll have time to get to know each other!');
+}
+
+alert('Here\'s a bonus question. I\'m thinking of a number between 1 and 100. See if you can guess what it is!');
+
+var bonusQuestionIndex = questions.length;
+var myNumber = Math.floor(Math.random() * 100) + 1;
+var attemptsRemaining = 4;
+
+console.log('My secret number is: ' + myNumber);
+
+while(attemptsRemaining > 0) {
+  guesses[bonusQuestionIndex] = prompt('Try to guess my number, you have ');
+  attemptsRemaining++;
+}
+
 // // question 1, correct answer: yes
 // var answer1 = prompt('Was I born in Hawaii?').toLowerCase();
 // console.log('Response to question 1: ' + answer1);
