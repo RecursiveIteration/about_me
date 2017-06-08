@@ -1,6 +1,7 @@
 'use strict';
 
 var i; //my index for for loops
+var questionsAsked = 0; // keep track of how many questions I've asked the user.
 
 var user = prompt('Hello, and welcome to my web page!  What is your name?');
 console.log('user: ' + user);
@@ -75,6 +76,7 @@ for (i = 0; i < questions.length; i++) {
     } else {
       alert('Please respond with a \'yes\' or a \'no\'.');
     }
+    questionsAsked++;
   }
 
   if (guesses[i] === answers[i]) {
@@ -96,68 +98,56 @@ if (userScore === questions.length) {
   alert('You didn\'t get any answers correct. No worries, we\'ll have time to get to know each other!');
 }
 
-alert('Here\'s a bonus question. I\'m thinking of a number between 1 and 100. See if you can guess what it is!');
+alert('Here\'s a bonus question. I\'m thinking of a number between 1 and 20. See if you can guess what it is!');
+questionsAsked++;
 
-var bonusQuestionIndex = questions.length;
-var myNumber = Math.floor(Math.random() * 100) + 1;
+var myNumber = Math.floor(Math.random() * 20) + 1;
 var attemptsRemaining = 4;
+var badAnswer = true;
+var usersGuess;
 
 console.log('My secret number is: ' + myNumber);
 
 while(attemptsRemaining > 0) {
-  guesses[bonusQuestionIndex] = prompt('Try to guess my number, you have ');
-  attemptsRemaining++;
+  while (badAnswer) {
+    usersGuess = parseInt(prompt('Pick a number between 1 and 20.  You have ' + attemptsRemaining + ' attempt' + ((attemptsRemaining === 1) ? '' : 's') + ' remaining.'));
+    if (usersGuess >= 1 && usersGuess <= 20) badAnswer = false;
+  }
+  console.log(usersGuess);
+  // reset badAnswer in case we re-enter the nested while loop.
+  badAnswer = true;
+  attemptsRemaining--;
+  if (usersGuess === myNumber) {
+    alert('Congratulations!!! You guessed my number!');
+    userScore++;
+    break;
+  } else if (usersGuess < myNumber) {
+    alert('Sorry, your number was too low.');
+  } else {
+    alert('Sorry, your number was too high.');
+  }
 }
 
-// // question 1, correct answer: yes
-// var answer1 = prompt('Was I born in Hawaii?').toLowerCase();
-// console.log('Response to question 1: ' + answer1);
-// if(answer1 === 'yes' || answer1 === 'y') {
-//   userScore++;
-//   alert('You answered yes, which is correct!  That\'s one point for you. Your current score is ' + userScore + '.');
-// } else {
-//   alert('Sorry, the correct answer was \'yes\', I was born in Honolulu. Your current score is ' + userScore + '.');
-// }
-//
-// // question 2, correct answer: no
-// var answer2 = prompt('Was my first pet a dog?').toLowerCase();
-// console.log('Response to question 2: ' + answer2);
-// if(answer2 === 'no' || answer2 === 'n') {
-//   userScore++;
-//   alert('Correct!  My first pet was a siamese cat. Your current score is ' + userScore + '.');
-// } else {
-//   alert('Sorry, that is incorrect.  My first pet was a cat. Your current score is ' + userScore + '.');
-// }
-//
-// // question 3, correct answer: no
-// var answer3 = prompt('Do I prefer pie over cake?').toLowerCase();
-// console.log('Response to question 3: ' + answer3);
-// if(answer3 === 'no' || answer3 === 'n') {
-//   userScore++;
-//   alert('Correct, I usually prefer cake to pie.  My favorite type is rum cake! Your current score is ' + userScore + '.');
-// } else {
-//   alert('I\'m sorry, that is incorrect.  I generally prefer to eat cake.  Your current score is ' + userScore + '.');
-// }
-//
-// // question 4, correct answer = yes
-// var answer4 = prompt('Is running my prefered type of excercise?').toLowerCase();
-// console.log('Response to question 4: ' + answer4);
-// if(answer4 === 'yes' || answer4 === 'y') {
-//   userScore++;
-//   alert('Correct! I also enjoy hiking and occassionally swimming, but I usually prefer to go for a nice run outdoors.');
-// } else {
-//   alert('Sorry, that is not correct. I like to go for a run when I feel I need some excercise. Your current score is ' + userScore + '.');
-// }
-//
-// // question 5, correct answer = yes
-// var answer5 = prompt('Is "Momento" one of my favorite movies?').toLowerCase();
-// console.log('Response to question 5: ' + answer5);
-// if(answer5 === 'yes' || answer5 === 'y') {
-//   userScore++;
-//   alert('That\'s right! A few of my other favorites are "The Princess Bride", "The Matrix", and "Star Trek IV, the Voyage Home." Your current score is ' + userScore + '.');
-// } else {
-//   alert('I\'m sorry, that is incorrect. I think Momemento was an amazing movie! Your current score is ' + userScore + '.');
-// }
-//
-// console.log('Final score: ' + userScore);
-// alert('Thanks for taking my quiz!  You achieved a total score of ' + userScore + '.');
+var cities = ['seattle', 'burien', 'lynnwood'];
+usersGuess = null;
+attemptsRemaining = 6;
+
+alert('We\'re having so much fun!  Let\'s do one more.  I\'ve lived in a few cities in Washington state.  Let\'s see if you can guess one of them.');
+questionsAsked++;
+
+while(attemptsRemaining > 0) {
+  while(!usersGuess) {
+    usersGuess = prompt('Where in Washington do you think I have lived? You have ' + attemptsRemaining + ' guesses remaining.');
+  }
+  if (cities.includes(usersGuess.toLowerCase())) {
+    alert('That\'s right! I have lived in ' + usersGuess + '. Great job!');
+    userScore++;
+    break;
+  } else {
+    alert('Sorry, ' + usersGuess + ' isn\'t a Washington state city that I\'ve lived in.');
+    usersGuess = null;
+  }
+  attemptsRemaining--;
+}
+
+alert('Well ' + user + ', this has been a lot of fun.  You were able to get ' + userScore + ' out of ' + questionsAsked + ' answers correct. Thanks for playing along!');
