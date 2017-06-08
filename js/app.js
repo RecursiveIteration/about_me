@@ -62,32 +62,37 @@ var currentGuess; // temp variable for storing users guesses while checking thei
 var isCorrect; // used to index 2D array <responses>
 var confirmationMsg; // temporarily stores messages for alerts about right/wrong answers
 
-for (i = 0; i < questions.length; i++) {
-  while(!guesses[i]) {
-    currentGuess = null;
-    currentGuess = prompt(questions[i]);
-    if (!currentGuess) {
-      alert('I really need you to answer these questions!');
-    } else {
-      currentGuess = currentGuess.toLowerCase();
+askYesNoQuestions();
+
+function askYesNoQuestions () {
+  for (i = 0; i < questions.length; i++) {
+    while(!guesses[i]) {
+      currentGuess = null;
+      currentGuess = prompt(questions[i]);
+      if (!currentGuess) {
+        alert('I really need you to answer these questions!');
+      } else {
+        currentGuess = currentGuess.toLowerCase();
+      }
+      if (currentGuess === 'yes' || currentGuess === 'y') {
+        guesses.push('yes');
+      } else if (currentGuess === 'no' || currentGuess === 'n') {
+        guesses.push('no');
+      } else {
+        alert('Please respond with a \'yes\' or a \'no\'.');
+      }
+      questionsAsked++;
     }
-    if (currentGuess === 'yes' || currentGuess === 'y') {
-      guesses.push('yes');
-    } else if (currentGuess === 'no' || currentGuess === 'n') {
-      guesses.push('no');
-    } else {
-      alert('Please respond with a \'yes\' or a \'no\'.');
-    }
-    questionsAsked++;
+
+
+    if (guesses[i] === answers[i]) {
+      userScore++;
+      isCorrect = 1;
+    } else isCorrect = 0;
+
+    confirmationMsg = responses[isCorrect][i] + '\n\nYour current score is: ' + userScore + '.';
+    alert(confirmationMsg);
   }
-
-  if (guesses[i] === answers[i]) {
-    userScore++;
-    isCorrect = 1;
-  } else isCorrect = 0;
-
-  confirmationMsg = responses[isCorrect][i] + '\n\nYour current score is: ' + userScore + '.';
-  alert(confirmationMsg);
 }
 
 if (userScore === questions.length) {
@@ -110,23 +115,27 @@ var usersGuess; // stores users answer
 
 console.log('My secret number is: ' + myNumber);
 
-while(attemptsRemaining > 0) {
-  while (badAnswer) {
-    usersGuess = parseInt(prompt('Pick a number between 1 and 20.  You have ' + attemptsRemaining + ' attempt' + ((attemptsRemaining === 1) ? '' : 's') + ' remaining.'));
-    if (usersGuess >= 1 && usersGuess <= 20) badAnswer = false;
-  }
-  console.log(usersGuess);
-  // reset badAnswer in case we re-enter the nested while loop.
-  badAnswer = true;
-  attemptsRemaining--;
-  if (usersGuess === myNumber) {
-    alert('Congratulations!!! You guessed my number!');
-    userScore++;
-    break;
-  } else if (usersGuess < myNumber) {
-    alert('Sorry, your number was too low.');
-  } else {
-    alert('Sorry, your number was too high.');
+playGuessNumber();
+
+function playGuessNumber () {
+  while(attemptsRemaining > 0) {
+    while (badAnswer) {
+      usersGuess = parseInt(prompt('Pick a number between 1 and 20.  You have ' + attemptsRemaining + ' attempt' + ((attemptsRemaining === 1) ? '' : 's') + ' remaining.'));
+      if (usersGuess >= 1 && usersGuess <= 20) badAnswer = false;
+    }
+    console.log(usersGuess);
+    // reset badAnswer in case we re-enter the nested while loop.
+    badAnswer = true;
+    attemptsRemaining--;
+    if (usersGuess === myNumber) {
+      alert('Congratulations!!! You guessed my number!');
+      userScore++;
+      break;
+    } else if (usersGuess < myNumber) {
+      alert('Sorry, your number was too low.');
+    } else {
+      alert('Sorry, your number was too high.');
+    }
   }
 }
 
@@ -137,19 +146,23 @@ attemptsRemaining = 6;
 alert('We\'re having so much fun!  Let\'s do one more.  I\'ve lived in a few cities in Washington state.  Let\'s see if you can guess one of them.');
 questionsAsked++;
 
-while(attemptsRemaining > 0) {
-  while(!usersGuess) {
-    usersGuess = prompt('Where in Washington do you think I have lived? You have ' + attemptsRemaining + ' guesses remaining.');
+playGuessCity ();
+
+function playGuessCity () {
+  while(attemptsRemaining > 0) {
+    while(!usersGuess) {
+      usersGuess = prompt('Where in Washington do you think I have lived? You have ' + attemptsRemaining + ' guesses remaining.');
+    }
+    if (cities.includes(usersGuess.toLowerCase())) {
+      alert('That\'s right! I have lived in ' + usersGuess + '. Great job!');
+      userScore++;
+      break;
+    } else {
+      alert('Sorry, ' + usersGuess + ' isn\'t a Washington state city that I\'ve lived in.');
+      usersGuess = null;
+    }
+    attemptsRemaining--;
   }
-  if (cities.includes(usersGuess.toLowerCase())) {
-    alert('That\'s right! I have lived in ' + usersGuess + '. Great job!');
-    userScore++;
-    break;
-  } else {
-    alert('Sorry, ' + usersGuess + ' isn\'t a Washington state city that I\'ve lived in.');
-    usersGuess = null;
-  }
-  attemptsRemaining--;
 }
 
 alert('Well ' + user + ', this has been a lot of fun.  You were able to get ' + userScore + ' out of ' + questionsAsked + ' answers correct. Thanks for playing along!');
