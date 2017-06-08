@@ -2,12 +2,14 @@
 
 var i; //my index for for loops
 var questionsAsked = 0; // keep track of how many questions I've asked the user.
+var userScore = 0; // variable for keeping track of the users points
+var user;
 
-var user = prompt('Hello, and welcome to my web page!  What is your name?');
-console.log('user: ' + user);
+while (!user) {
+  user = prompt('Hello, and welcome to my web page!  What is your name?');
+  console.log('user: ' + user);
+}
 
-// variable to store users score
-var userScore = 0;
 console.log('userScore initialized to: ' + userScore);
 
 alert('Welcome ' + user + '! Let\'s play a quick game. I\'m going to ask you a few questions about myself, and you\'ll score a point for each answer you get correct! Please answer each question with a simple yes/no or y/n.');
@@ -55,10 +57,10 @@ for (i = 0; i < responses[1].length; i++) {
   console.log('  ' + responses[1][i]);
 }
 
-var guesses = [];
-var currentGuess;
-var isCorrect;
-var confirmationMsg;
+var guesses = []; // list of users answers to the questions
+var currentGuess; // temp variable for storing users guesses while checking their validity
+var isCorrect; // used to index 2D array <responses>
+var confirmationMsg; // temporarily stores messages for alerts about right/wrong answers
 
 for (i = 0; i < questions.length; i++) {
   while(!guesses[i]) {
@@ -101,10 +103,10 @@ if (userScore === questions.length) {
 alert('Here\'s a bonus question. I\'m thinking of a number between 1 and 20. See if you can guess what it is!');
 questionsAsked++;
 
-var myNumber = Math.floor(Math.random() * 20) + 1;
+var myNumber = Math.floor(Math.random() * 20) + 1; // rand number between 1 and 20
 var attemptsRemaining = 4;
-var badAnswer = true;
-var usersGuess;
+var badAnswer = true; // cycles while loop until a valid answer switches it to <false>
+var usersGuess; // stores users answer
 
 console.log('My secret number is: ' + myNumber);
 
