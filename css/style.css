@@ -1,17 +1,41 @@
-* {
-  color: #222288;
-  background-color: #ff9999;
+body {
+  color: #32163b;
+  background-color: #c4a109;
+  position: relative;
+}
+
+header {
+  padding-left: 25px;
+  padding-right: 25px;
+  color: #c4a109;
+  background-color: #32163b;
 }
 
 h1 {
-  color: black;
+  font-family: "Dancing Script", cursive;
+  text-align: center;
+  font-size: 4em;
 }
 
-header h3 {
-  font-family: cursive;
+h3 {
+  font-size: 2.5em;
+}
+
+h5 {
+  font-size: 2em;
 }
 
 abbr {
   text-decoration: none;
-  color: #111177;
+}
+
+main {
+  clear: both;
+}
+
+img {
+  border: 3px solid #32163b;
+  float: left;
+  width: 200px;
+  margin-right: 25px;
 }
